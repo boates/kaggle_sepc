@@ -18,15 +18,15 @@ def _day(n):
 def _datestring(n):
     return _year(n) + '-' + _month(n) + '-' + _day(n)
 
-"""
-Takes a list of date integers and returns a pandas time series. Useful for adding a time series index to a pandas
-dataframe.
-
-Example Usage: df.index = datestring_index(df.Date)
-
-A date integer is an integer of the form yyyymmdd
-"""
 def datestring_index(date_int_list):
+    """
+    Takes a list of date integers and returns a pandas time series. Useful for adding a time series index to a pandas
+    dataframe.
+
+    Example Usage: df.index = datestring_index(df.Date)
+
+    A date integer is an integer of the form yyyymmdd
+    """
     return pd.to_datetime([_datestring(n) for n in date_int_list])
 
 def populate_stations():
