@@ -2,10 +2,14 @@ import numpy as np
 import pandas as pd
 import csv
 
-from station import Station
+
+from objects.station import Station
+
+
 from geopy.point import Point
 import heapq
 import numpy as np
+
 from data_pipeline import get_example_probe
 from objects.station import Station
 from objects.probe import Probe
