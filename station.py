@@ -10,8 +10,8 @@ class Station(object):
         self. elev = elevation
 
     def __repr__(self):
-        s  = 'name: '+str(self.name)
-        s += 'latitude: '+str(self.lat)
-        s += 'longitude: '+str(self.long)
-        s += 'elevation: '+str(self.elev)
+        s  = 'name: '+str(self.name) + "\n"
+        s += 'latitude: '+str(self.lat) + "\n"
+        s += 'longitude: '+str(self.long) + "\n"
+        s += 'elevation: '+str(self.elev)  + "\n"
         return s

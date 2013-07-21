@@ -4,7 +4,9 @@ import pandas as pd
 import csv
 
 from station import Station
-
+from geopy.point import Point
+import heapq
+import numpy as np
 
 STATION_INFO = {}
 
@@ -38,9 +40,16 @@ def populate_stations():
 def get_station(station_name):
     return STATION_INFO[station_name]
 
+def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod = distance.GreatCircleDistance):
+    distance.distance = distanceMethod  
+    distances = [distance.distance(Point(coord1['lat'], coord1['lon'],coord1['elev']), Point(coord2['lat'], coord2['lon'],coord2['elev'])).miles for idx, coord2 in coord2_list.iterrows()]
+    maxd = np.max(heapq.nsmallest(n, distances))
+    return coord2_list[(distances<=maxd)]
+
 def main():
     populate_stations()
 
 if __name__ =="__main__":
     main()
     print STATION_INFO
+
