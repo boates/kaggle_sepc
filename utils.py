@@ -10,6 +10,7 @@ from geopy.point import Point
 from geopy import distance
 import heapq
 import numpy as np
+import copy
 
 from data_pipeline import get_example_probe
 from objects.station import Station
@@ -102,7 +103,7 @@ def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod = distance
     if getDistances:
         df_ret = copy.deepcopy(coord2_list)
         df_ret['dist'] = distances
-        return df_ret[df_ret['distances']<=maxd]
+        return df_ret[df_ret['dist']<=maxd]
     else:
         return coord2_list[(distances<=maxd)]
 
