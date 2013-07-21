@@ -3,18 +3,13 @@ import pandas as pd
 import csv
 
 from station import Station
-<<<<<<< HEAD
 from geopy.point import Point
 import heapq
 import numpy as np
-=======
 from data_pipeline import get_example_probe
-
 from objects.station import Station
 from objects.probe import Probe
-
 import globals
->>>>>>> origin/master
 
 
 def _year(n):
