@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import csv
 
-from station import Station
+from objects.station import Station
 from data_pipeline import get_example_probe
 
 from objects.station import Station

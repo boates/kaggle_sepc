@@ -1,28 +1,30 @@
 
-from probes import Probe
+from objects.probe import Probe
 
 from pandas import Series, DataFrame
+
+import random
 
 def get_example_probe_features():
 
     data = DataFrame()
 
     features = {
-        'apcp_sfc3' : Series(0),
-        'dlwrf_sfcDownward' : Series(0),
-        'dswrf_sfcDownward' : Series(0),
-        'pres_mslAir' : Series(0),
-        'pwat_eatmPrecipitable' : Series(0),
-        'spfh_2mSpecific' : Series(0),
-        'tcdc_eatmTotal' : Series(0),
-        'tcolc_eatmTotal' : Series(0),
-        'tmax_2m' : Series(0),
-        'tmin_2m' : Series(0),
-        'tmp_2m' : Series(0),
-        'tmp_sfc' : Series(0),
-        'ulwrf_sfc' : Series(0),
-        'ulwrf_tatm' : Series(0),
-        'uswrf_sfc' : Series(0)}
+        'apcp_sfc3' : random.random(),
+        'dlwrf_sfcDownward' : random.random(),
+        'dswrf_sfcDownward' : random.random(),
+        'pres_mslAir' : random.random(),
+        'pwat_eatmPrecipitable' : random.random(),
+        'spfh_2mSpecific' : random.random(),
+        'tcdc_eatmTotal' : random.random(),
+        'tcolc_eatmTotal' : random.random(),
+        'tmax_2m' : random.random(),
+        'tmin_2m' : random.random(),
+        'tmp_2m' : random.random(),
+        'tmp_sfc' : random.random(),
+        'ulwrf_sfc' : random.random(),
+        'ulwrf_tatm' : random.random(),
+        'uswrf_sfc' : random.random()}
 
     return DataFrame(features, index=range(1))
 
