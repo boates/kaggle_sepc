@@ -1,12 +1,15 @@
-
-from utils import *
-
+#!/usr/bin/env python
+"""
+main.py
+"""
+import globals
 from utils import populate_stations
 from utils import populate_probes
 from utils import get_station
-
-import globals
-
+from utils import get_all_features
+from utils import train_model
+from utils import get_features_for_station
+from utils import classify
 
 def main():
 

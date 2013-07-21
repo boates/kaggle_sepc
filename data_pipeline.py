@@ -1,9 +1,7 @@
-
-from objects.probe import Probe
-
-from pandas import Series, DataFrame
-
 import random
+from objects.probe import Probe
+from pandas import Series
+from pandas import DataFrame
 
 def get_example_probe_features():
 

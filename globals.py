@@ -1,9 +1,5 @@
-
-
-
 STATIONS = {}
 
 PROBES = {}
 
-
-TARGET = "fish"
+TARGET = 'target'

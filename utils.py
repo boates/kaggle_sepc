@@ -1,34 +1,32 @@
 import numpy as np
 import pandas as pd
 import csv
-
-
+import globals
 from objects.station import Station
-
-
 from geopy.point import Point
 from geopy import distance
 import heapq
 import numpy as np
 import copy
-
 from data_pipeline import get_example_probe
 from objects.station import Station
 from objects.probe import Probe
-import globals
-
 
 def _year(n):
     return str(n)[:4]
 
+
 def _month(n):
     return str(n)[4:6]
+
 
 def _day(n):
     return str(n)[6:]
 
+
 def _datestring(n):
     return _year(n) + '-' + _month(n) + '-' + _day(n)
+
 
 def datestring_index(date_int_list):
     """
@@ -71,10 +69,6 @@ def populate_probes():
         globals.PROBES[name] = get_example_probe(name)
 
 
-#def get_features_from_station(station_name):
-#    return []
-
-
 def get_features_at_location(lat, lon, elivation):
     station = get_closest_station(lat, lon, elivation)
     features = get_features_from_station(station)
@@ -96,7 +90,8 @@ def train_model(features):
     print "DUMMY 'train_model'"
     return None
 
-def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod = distance.GreatCircleDistance, getDistances = False):
+
+def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod=distance.GreatCircleDistance, getDistances=False):
     distance.distance = distanceMethod  
     distances = [distance.distance(Point(coord1['lat'], coord1['lon'],coord1['elev']), Point(coord2['lat'], coord2['lon'],coord2['elev'])).miles for idx, coord2 in coord2_list.iterrows()]
     maxd = np.max(heapq.nsmallest(n, distances))
