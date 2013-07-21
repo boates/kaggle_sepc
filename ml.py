@@ -10,7 +10,17 @@ import random
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestRegressor
 
-def evaluation_metric(predictions, target):
+def mean_absolute_error(predictions, target):
+    """
+    return: float | mean absolute error (per example)
+    params:
+       predictions | 1D array of predicted values
+            target | 1D array of actual values
+    """
+    return np.sum( abs(predictions - target) ) / float(len(target))
+
+
+def evaluation_metric(predictions, target, metric_fnc=mean_absolute_error):
     """
     return: float | evaluation metric
                     (i.e. mean absolute error 
@@ -18,8 +28,9 @@ def evaluation_metric(predictions, target):
     params:
        predictions | 1D array of predicted values
             target | 1D array of actual values
+        metric_fnc | method returning an evaluation metric as a float
     """
-    return np.sum( abs(predictions - target) ) / float(len(target))
+    return metric_fnc(predictions, target)
 
 
 def split_data(df, train_frac=0.70, shuffle=True):
