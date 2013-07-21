@@ -1,14 +1,21 @@
-
-
+import numpy as np
 import pandas as pd
 import csv
 
 from station import Station
+<<<<<<< HEAD
 from geopy.point import Point
 import heapq
 import numpy as np
+=======
+from data_pipeline import get_example_probe
 
-STATION_INFO = {}
+from objects.station import Station
+from objects.probe import Probe
+
+import globals
+>>>>>>> origin/master
+
 
 def _year(n):
     return str(n)[:4]
@@ -22,23 +29,71 @@ def _day(n):
 def _datestring(n):
     return _year(n) + '-' + _month(n) + '-' + _day(n)
 
-#example usage: df.index = datestring_index(df.Date)
 def datestring_index(date_int_list):
-    pd.to_datetime([_datestring(n) for n in date_int_list])
+    """
+    Takes a list of date integers and returns a pandas time series. Useful for adding a time series index to a pandas
+    dataframe.
 
-def populate_stations():
-    # load the csv
+    Example Usage: df.index = datestring_index(df.Date)
 
+
+    A date integer is an integer of the form yyyymmdd
+    """
+    return pd.to_datetime([_datestring(n) for n in date_int_list])
+
+
+def load_stations():
     station_file  = open('data/station_info.csv', "rb")
     station_data = csv.reader(station_file)
-    #station_data = load_csv("data/station_info.csv")
-
+    stations = {}
     for name, lat, lon, elev in station_data:
         station = Station(name, lat, long, elev)
-        STATION_INFO[name] = station
+        stations[name] = station
+    return stations
+
+
+def populate_stations():
+    globals.STATIONS = load_stations()
+
 
 def get_station(station_name):
-    return STATION_INFO[station_name]
+    return globals.STATIONS[station_name]
+
+
+def populate_probes():
+    """
+    This is just all BS for now until
+    we can actually load the real probes
+    """
+    for i in range(10):
+        name = '%s' % i
+        globals.PROBES[name] = get_example_probe(name)
+
+
+def get_features_from_station(station_name):
+    return []
+
+
+def get_features_at_location(lat, lon, elivation):
+    station = get_closest_station(lat, lon, elivation)
+    features = get_features_from_station(station)
+    return features
+
+
+def get_all_features(stations, probes):
+    print "DUMMY 'get_all_features'"
+    print probes
+    return [probe.features for probe in probes]
+
+
+def get_features_for_station(station):
+    print "DUMMY 'get_all_features'"
+    return globals.PROBES['0'].features
+
+
+def train_model(features):
+    print "DUMMY 'train_model'"
+    return None
 
 def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod = distance.GreatCircleDistance):
     distance.distance = distanceMethod  
@@ -46,10 +101,6 @@ def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod = distance
     maxd = np.max(heapq.nsmallest(n, distances))
     return coord2_list[(distances<=maxd)]
 
-def main():
-    populate_stations()
-
-if __name__ =="__main__":
-    main()
-    print STATION_INFO
-
+def classify(model, features):
+    print "DUMMY 'classify'"
+    return None
