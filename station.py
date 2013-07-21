@@ -14,4 +14,4 @@ class Station(object):
         s += 'latitude: '+str(self.lat)
         s += 'longitude: '+str(self.long)
         s += 'elevation: '+str(self.elev)
-        return s
+        return s + '/n'
