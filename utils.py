@@ -1,5 +1,4 @@
 
-
 import pandas as pd
 import csv
 
@@ -22,7 +21,7 @@ def _datestring(n):
 
 #example usage: df.index = datestring_index(df.Date)
 def datestring_index(date_int_list):
-    pd.to_datetime([_datestring(n) for n in date_int_list])
+    return pd.to_datetime([_datestring(n) for n in date_int_list])
 
 def populate_stations():
     # load the csv
