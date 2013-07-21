@@ -7,6 +7,7 @@ from objects.station import Station
 
 
 from geopy.point import Point
+from geopy import distance
 import heapq
 import numpy as np
 
