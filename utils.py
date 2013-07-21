@@ -73,3 +73,23 @@ def get_features_at_location(lat, lon, elivation):
     features = get_features_from_station(station)
     return features
 
+
+def get_all_features(stations, probes):
+    print "DUMMY 'get_all_features'"
+    print probes
+    return [probe.features for probe in probes]
+
+
+def get_features_for_station(station):
+    print "DUMMY 'get_all_features'"
+    return globals.PROBES['0'].features
+
+
+def train_model(features):
+    print "DUMMY 'train_model'"
+    return None
+
+
+def classify(model, features):
+    print "DUMMY 'classify'"
+    return None
