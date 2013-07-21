@@ -1,10 +1,14 @@
+import numpy as np
 import pandas as pd
 import csv
 
-from station import Station
+from objects.station import Station
+from objects.probe import Probe
 
+# Global variables (for now)
+STATIONS = {}
+PROBES = {}
 
-STATION_INFO = {}
 
 def _year(n):
     return str(n)[:4]
@@ -25,23 +29,32 @@ def datestring_index(date_int_list):
 
     Example Usage: df.index = datestring_index(df.Date)
 
+
     A date integer is an integer of the form yyyymmdd
     """
     return pd.to_datetime([_datestring(n) for n in date_int_list])
 
 def populate_stations():
-    # load the csv
-
     station_file  = open('data/station_info.csv', "rb")
     station_data = csv.reader(station_file)
-    #station_data = load_csv("data/station_info.csv")
-
     for name, lat, lon, elev in station_data:
         station = Station(name, lat, long, elev)
-        STATION_INFO[name] = station
+        STATIONS[name] = station
+
 
 def get_station(station_name):
-    return STATION_INFO[station_name]
+    return STATIONS[station_name]
+
+
+def get_features_from_station(station_name):
+    return []
+
+
+def get_features_at_location(lat, lon, elivation):
+    station = get_closest_station(lat, lon, elivation)
+    features = get_features_from_station(station)
+    return features
+
 
 def main():
     populate_stations()
