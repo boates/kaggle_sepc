@@ -19,7 +19,6 @@ def _day(n):
 def _datestring(n):
     return _year(n) + '-' + _month(n) + '-' + _day(n)
 
-#example usage: df.index = datestring_index(df.Date)
 def datestring_index(date_int_list):
     return pd.to_datetime([_datestring(n) for n in date_int_list])
 
@@ -36,6 +35,14 @@ def populate_stations():
 
 def get_station(station_name):
     return STATION_INFO[station_name]
+
+def get_features_from_station(station_name):
+    return []
+
+def get_features_at_location(lat, lon, elivation):
+    station = get_closest_station(lat, lon, elivation)
+    features = get_features_from_station(station)
+    return features
 
 def main():
     populate_stations()
