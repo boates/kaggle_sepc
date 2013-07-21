@@ -2,17 +2,13 @@ import numpy as np
 import pandas as pd
 import csv
 
-
 from station import Station
 from data_pipeline import get_example_probe
 
 from objects.station import Station
 from objects.probe import Probe
 
-
-# Global variables (for now)
-STATIONS = {}
-PROBES = {}
+import globals
 
 
 def _year(n):
@@ -39,16 +35,23 @@ def datestring_index(date_int_list):
     """
     return pd.to_datetime([_datestring(n) for n in date_int_list])
 
-def populate_stations():
+
+def load_stations():
     station_file  = open('data/station_info.csv', "rb")
     station_data = csv.reader(station_file)
+    stations = {}
     for name, lat, lon, elev in station_data:
         station = Station(name, lat, long, elev)
-        STATIONS[name] = station
+        stations[name] = station
+    return stations
+
+
+def populate_stations():
+    globals.STATIONS = load_stations()
 
 
 def get_station(station_name):
-    return STATIONS[station_name]
+    return globals.STATIONS[station_name]
 
 
 def populate_probes():
@@ -58,7 +61,7 @@ def populate_probes():
     """
     for i in range(10):
         name = '%s' % i
-        PROBES[name] = get_example_probe(name)
+        globals.PROBES[name] = get_example_probe(name)
 
 
 def get_features_from_station(station_name):
@@ -69,16 +72,4 @@ def get_features_at_location(lat, lon, elivation):
     station = get_closest_station(lat, lon, elivation)
     features = get_features_from_station(station)
     return features
-
-
-def main():
-    populate_stations()
-    print STATIONS
-
-    populate_probes()
-    print PROBES
-
-
-if __name__ =="__main__":
-    main()
 
