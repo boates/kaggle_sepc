@@ -44,6 +44,32 @@ def split_data(df, train_frac=0.70, shuffle=True):
     return df_train, df_predict
 
 
+def train_model(model, df_train, target_name='target'):
+    """
+    return:
+        trained model object
+    params:
+            model: model object | (i.e. sklearn.ensemble.RandomForestRegressor)
+         df_train: pd.DataFrame | feature & target data to train on
+      target_name: string       | name of target column in df
+    """
+    feature_names = [c for c in df_train.columns if c != target_name]
+    return model.fit(df_train[feature_names].values, df_train[target_name])
+
+
+def make_predictions(trained_model, df_predict, target_name='target'):
+    """
+    return:
+        trained model object
+    params:
+      trained_model: trained model object | (i.e. sklearn.ensemble.RandomForestRegressor)
+         df_predict: pd.DataFrame | feature data for predicting
+        target_name: string       | name of target column in df
+    """
+    feature_names = [c for c in df_predict.columns if c != target_name]
+    return trained_model.predict(df_predict[feature_names].values)
+
+
 def run_model(model, df, target_name='target', **kwargs):
     """
     Train a model and make predictions, return a metric
@@ -51,18 +77,16 @@ def run_model(model, df, target_name='target', **kwargs):
     return:
         float | evaluation metric (i.e. mean absolute error)
     params:
-               df: pd.DataFrame | feature & target data to train and predict on
             model: model object | (i.e. sklearn.ensemble.RandomForestRegressor)
+               df: pd.DataFrame | feature & target data to train and predict on
       target_name: string       | name of target column in df
          **kwargs: optional args
     """
     df_train, df_predict = split_data(df, **kwargs)
     
-    feature_names = [c for c in df.columns if c != target_name]
-        
-    trained_model = model.fit(df_train[feature_names].values, df_train[target_name])
+    trained_model = train_model(model, df_train)
     
-    predictions = model.predict(df_predict[feature_names].values)
+    predictions = make_predictions(trained_model, df_predict)
     
     return evaluation_metric(predictions, df_predict[target_name].values)
 
@@ -83,7 +107,7 @@ def run_models(n_runs, model, df, target_name='target', **kwargs):
     metrics = []
     for i in range(n_runs):
         model_clone = clone(model)
-        metrics.append( run_model(model_clone, df, target_name, **kwargs) )
+        metrics.append( run_model(model_clone, df, **kwargs) )
     return metrics
 
 
