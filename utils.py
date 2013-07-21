@@ -2,6 +2,7 @@ import pandas as pd
 import csv
 
 from station import Station
+from data_pipeline import get_example_probe
 
 # Global variables (for now)
 STATIONS = {}
@@ -44,6 +45,16 @@ def get_station(station_name):
     return STATIONS[station_name]
 
 
+def populate_probes():
+    """
+    This is just all BS for now until
+    we can actually load the real probes
+    """
+    for i in range(10):
+        name = '%s' % i
+        PROBES[name] = get_example_probe(name)
+
+
 def get_features_from_station(station_name):
     return []
 
@@ -56,7 +67,12 @@ def get_features_at_location(lat, lon, elivation):
 
 def main():
     populate_stations()
+    print STATIONS
+
+    populate_probes()
+    print PROBES
+
 
 if __name__ =="__main__":
     main()
-    print STATION_INFO
+
