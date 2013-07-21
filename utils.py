@@ -7,8 +7,10 @@ from objects.station import Station
 
 
 from geopy.point import Point
+from geopy import distance
 import heapq
 import numpy as np
+import copy
 
 from data_pipeline import get_example_probe
 from objects.station import Station
@@ -94,11 +96,16 @@ def train_model(features):
     print "DUMMY 'train_model'"
     return None
 
-def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod = distance.GreatCircleDistance):
+def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod = distance.GreatCircleDistance, getDistances = False):
     distance.distance = distanceMethod  
     distances = [distance.distance(Point(coord1['lat'], coord1['lon'],coord1['elev']), Point(coord2['lat'], coord2['lon'],coord2['elev'])).miles for idx, coord2 in coord2_list.iterrows()]
     maxd = np.max(heapq.nsmallest(n, distances))
-    return coord2_list[(distances<=maxd)]
+    if getDistances:
+        df_ret = copy.deepcopy(coord2_list)
+        df_ret['dist'] = distances
+        return df_ret[df_ret['dist']<=maxd]
+    else:
+        return coord2_list[(distances<=maxd)]
 
 def classify(model, features):
     print "DUMMY 'classify'"
