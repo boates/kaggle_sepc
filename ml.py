@@ -135,10 +135,11 @@ def main():
     
     # Evaluate the models built on fake data
     model = RandomForestRegressor(n_estimators=10, max_depth=10)
-    
     metrics = run_models(10, model, df)
     
-    print metrics
+    # report the average metric
+    print 'You got: ', np.mean(metrics),
+    print '- This should be around 25 or 30'
 
     
 if __name__ == '__main__':
