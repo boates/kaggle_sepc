@@ -69,8 +69,8 @@ def populate_probes():
         globals.PROBES[name] = get_example_probe(name)
 
 
-def get_features_from_station(station_name):
-    return []
+#def get_features_from_station(station_name):
+#    return []
 
 
 def get_features_at_location(lat, lon, elivation):
