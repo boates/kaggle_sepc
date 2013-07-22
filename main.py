@@ -4,6 +4,7 @@ main.py
 """
 import globals
 import numpy as np
+import time
 from utils import populate_stations
 from utils import populate_probes
 from utils import get_station
@@ -17,21 +18,22 @@ def main():
     populate_probes()
     populate_stations()
     
-    # Let's get a particular station
-    station = get_station("ACME")
-    print station.features.shape
+    t0 = time.time()
+    station_metrics = {}
+    for station in globals.STATIONS.values():
     
-    model = RandomForestRegressor(n_estimators=1000)
+        model = RandomForestRegressor(n_estimators=globals.N_ESTIMATORS)    
+        feature_names = [c for c in station.features.columns if c not in globals.IGNORE_FEATURES]
     
-    remove_names = ['lat', 'lon', 'Date']
-    feature_names = [c for c in station.features.columns if c not in remove_names]
+        metric = ml.run_model(model, station.features[feature_names])    
+        station_metrics[station.name] = metric
     
-    metric = ml.run_model(model, station.features[feature_names])    
-    print metric
-    
-#    metrics = ml.run_models(10, model, station.features[feature_names])    
-#    print np.mean(metrics)
+        print station.name, time.time() - t0
 
+#        metrics = ml.run_models(10, model, station.features[feature_names])    
+#        print np.mean(metrics)
+
+    print np.mean(station_metrics.values())
 
 
 if __name__ =="__main__":

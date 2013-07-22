@@ -2,11 +2,13 @@
 
 import globals
 
+import numpy as np
+import pandas as pd
+
 from geopy.point import Point
 from geopy import distance
 
 import heapq
-import numpy as np
 import copy
 
 
@@ -30,7 +32,7 @@ class Station(object):
         self.lat   = float(latitude)
         self.lon   = float(longitude)
         self.elev  = float(elevation)
-        self.features = None
+        self.features = pd.DataFrame([])
 
     def __str__(self):
         s  = 'name: %s\n' % self.name
@@ -51,7 +53,24 @@ class Station(object):
         else:
             return None
 
-    def get_features(self):
+    def get_nearest_features(self):
         probe_list = globals.PROBES.values()
         nearest_probe = self.get_nearest_probe(probe_list)
         self.features = nearest_probe.features
+        
+    def get_features(self):
+        self.get_nearest_features()
+#        for (i,j), probe in globals.PROBES.iteritems():
+            
+#            if len(self.features) == 0:
+#                self.features = pd.DataFrame(index=range(len(probe.features)))
+                
+#            for feature_name in [c for c in probe.features.columns if c not in globals.IGNORE_FEATURES]:
+#                self.features[feature_name+'_%s_%s' % (i, j)] = probe.features[feature_name]
+    
+        
+        
+        
+        
+        
+        

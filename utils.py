@@ -24,7 +24,6 @@ def load_stations(path='data/station_info.csv'):
     for idx, (name, lat, lon, elev) in df.iterrows():
         station = Station(name, lat, lon, elev)
         station.get_features()
-        station.features.index = range(len(station.features))                
         station.features[globals.TARGET] = targets[name]
         stations[name] = station
     return stations
@@ -46,11 +45,15 @@ def get_probe_features(path='data/features/', start_date='19940101'):
         
         df = pickle.load(open(f))
         ens_names = df.columns[3:]
+        feature_name = f.split('/')[-1].split('.')[0]
         
-        feature_names = [f.split('/')[-1].split('.')[0]+'_'+ens for ens in ens_names]
-        rename_dict = dict(zip(ens_names, feature_names))
+        df2 = df[['day_num', 'lat', 'lon']]
+        df2[feature_name+'_mean'] = df[ens_names].mean(axis=1)
+        df = df2
         
-        df = df.rename(columns=rename_dict)
+#        feature_names = [feature_name+'_'+ens for ens in ens_names]
+#        rename_dict = dict(zip(ens_names, feature_names))        
+#        df = df.rename(columns=rename_dict)
         
         if len(features) == 0:
             features = df
@@ -75,6 +78,7 @@ def populate_probes():
             probe_features = all_features[(all_features['lat']==lat) & (all_features['lon']==lon)]
             probe = Probe(lat, lon)
             probe.features = probe_features
+            probe.features.index = range(len(probe.features))
             globals.PROBES[(lat, lon)] = probe
 
 
