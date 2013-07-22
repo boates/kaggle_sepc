@@ -24,7 +24,7 @@ class Probe(object):
         return lat_0 + self.i
     
     def _get_lon(self, lon_0=106):
-        return lon_0 - self.j
+        return -(lon_0 - self.j)
     
 
         

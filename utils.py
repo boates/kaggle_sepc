@@ -12,6 +12,9 @@ from data_pipeline import get_station_targets
 from objects.station import Station
 from objects.probe import Probe
 
+N_LAT = 9
+N_LON = 16
+
 def _year(n):
     return str(n)[:4]
 
@@ -41,8 +44,8 @@ def datestring_index(date_int_list):
     return pd.to_datetime([_datestring(n) for n in date_int_list])
 
 
-def load_stations():
-    df = pandas.read_csv('data/station_info.csv')
+def load_stations(path='data/station_info.csv'):
+    df = pandas.read_csv(path)
     stations = {}
 
     # Load the targets for all stations
@@ -50,7 +53,7 @@ def load_stations():
     for idx, (name, lat, lon, elev) in df.iterrows():
         station = Station(name, lat, lon, elev)
         station.get_features()
-        station.features[globals.TARGET] = targets[name]
+#        station.features[globals.TARGET] = targets[name]
         stations[name] = station
     return stations
 
@@ -73,18 +76,15 @@ def get_station(station_name):
 #         globals.PROBES[name] = get_example_probe(name)
 
 
-
-
 def populate_probes():
     """
     Returns the i, jth probe
     """
-
     # Get the dataframe for all features
     all_features = get_probe_features()
-    for lat in range(16):
-        for lon in range(9):
-            probe_features = all_features[(all_features['lat']==lat)&(all_features['lon']==lon)]
+    for lat in range(N_LON):
+        for lon in range(N_LAT):
+            probe_features = all_features[(all_features['lat']==lat) & (all_features['lon']==lon)]
             probe = Probe(lat, lon)
             probe.features = probe_features
             globals.PROBES[(lat, lon)] = probe

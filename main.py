@@ -14,12 +14,12 @@ from utils import get_probe
 
 
 def main():
-
+    
+    # in this order...
     populate_probes()
-    print globals.PROBES
-
+#    print globals.PROBES
     populate_stations()
-    print globals.STATIONS
+#    print globals.STATIONS
 
     # Let's make our feature set
     # Eventually we'll pick the probe by station
@@ -35,7 +35,13 @@ def main():
     station = get_station("ACME")
 
     # Let's get the features for this station
-    acme_features = station.features #get_features_for_station(station)
+    acme_features = station.features
+    
+    print acme_features.shape
+    print acme_features.head(1)
+    print acme_features.iloc[0]
+    
+    
 
     # Now, let's try to classify
     classification = classify(model, acme_features)

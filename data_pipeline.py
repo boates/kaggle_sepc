@@ -2,48 +2,49 @@
 import random
 from objects.probe import Probe
 
+import pandas as pd
 from pandas import Series
 from pandas import DataFrame
 from pandas import read_csv
 
 import pickle
+import glob
 
-from datetime import datetime
+import datetime
 
-
-def get_probe_features():
-
-    file = open('data/features/Minimum_temperature.pkl')
-    df1 = pickle.load(file)
-
-    file = open('data/features/Maximum_temperature.pkl')
-    df2 = pickle.load(file)
-
-    #return all_features = df1.merge(df2, on=('day_num', 'lat', 'lon'))
-    return df1.merge(df2, on=('day_num', 'lat', 'lon'))
-
-
-
-    #return df1
-
-"""
-    feature_files = ['Minimum_temperature', 'Maximum_temperature']
-
-    features = None
-
-    for file in feature_files:
-        file = open('data/features/%s.pkl' % file)
-        df = pickle.load(file)
-        if features=None:
+def get_probe_features(path='data/features/', start_date='19940101'):
+    
+    filepaths = glob.glob(path+'*.pkl')
+    
+    features = pd.DataFrame([])
+    for f in filepaths:
+        
+        df = pickle.load(open(f))
+        ens_names = df.columns[3:]
+        
+        feature_names = [f.split('/')[-1].split('.')[0]+'_'+ens for ens in ens_names]
+        rename_dict = dict(zip(ens_names, feature_names))
+        
+        df = df.rename(columns=rename_dict)
+        
+        if len(features) == 0:
             features = df
         else:
-            features.merge(df, on)
+            features = features.merge(df, on=('day_num', 'lat', 'lon'))
+            
+    start_date = datetime.datetime.strptime(str(start_date),'%Y%m%d')
+    
+    def day_num_to_datetime(i):
+        return start_date + datetime.timedelta(days=int(i))
+    
+    features['Date'] = features['day_num'].map(day_num_to_datetime)
+    del features['day_num']
+    
+    return features
 
-        return df
-"""
 
 def _get_datetime_from_station(date_string):
-    return datetime.strptime(str(date_string),'%Y%m%d')
+    return datetime.datetime.strptime(str(date_string),'%Y%m%d')
 
 
 def get_station_targets():
