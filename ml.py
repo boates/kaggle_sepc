@@ -17,7 +17,7 @@ def mean_absolute_error(predictions, target):
        predictions | 1D array of predicted values
             target | 1D array of actual values
     """
-    return np.sum( abs(predictions - target) ) / float(len(target))
+    return np.mean( abs(predictions - target) )
 
 
 def evaluation_metric(predictions, target, metric_fnc=mean_absolute_error):

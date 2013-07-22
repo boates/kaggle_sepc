@@ -20,7 +20,6 @@ class Probe(object):
     def __repr__(self):
         return self.__str__()
     
-
     def _get_lat(self, lat_0=31):
         return lat_0 + self.i
     

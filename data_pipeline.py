@@ -7,7 +7,7 @@ from pandas import DataFrame
 
 import pickle
 
-def get_feature_df(lat, lon):
+def get_probe_features():
 
     file = open('data/features/Minimum_temperature.pkl')
     df1 = pickle.load(file)
@@ -15,9 +15,8 @@ def get_feature_df(lat, lon):
     file = open('data/features/Maximum_temperature.pkl')
     df2 = pickle.load(file)
 
-    all_features = df1.merge(df2, on=('day_num', 'lat', 'lon'))
-
-    return all_features[(all_features['lat']==lat)&(all_features['lon']==lon)]
+    #return all_features = df1.merge(df2, on=('day_num', 'lat', 'lon'))
+    return df1.merge(df2, on=('day_num', 'lat', 'lon'))
 
 
 
