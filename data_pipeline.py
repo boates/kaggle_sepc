@@ -4,8 +4,12 @@ from objects.probe import Probe
 
 from pandas import Series
 from pandas import DataFrame
+from pandas import read_csv
 
 import pickle
+
+from datetime import datetime
+
 
 def get_probe_features():
 
@@ -38,6 +42,16 @@ def get_probe_features():
         return df
 """
 
+def _get_datetime_from_station(date_string):
+    return datetime.strptime(str(date_string),'%Y%m%d')
+
+
+def get_station_targets():
+    df = read_csv("data/train.csv")
+    df['Date'] = df['Date'].map(_get_datetime_from_station) #datestring_index(df['Date']) #.map(_convert_station_date_to_datetime)
+    return df
+
+
 def get_example_probe_features():
 
     data = DataFrame()
@@ -69,8 +83,9 @@ def get_example_probe(name):
 
 
 def main():
-    print get_feature_df(0, 0)
-
+    df = get_station_targets()
+    print df.head()
+    print df['Date']
 
 if __name__=="__main__":
     main()
