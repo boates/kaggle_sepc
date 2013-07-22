@@ -21,10 +21,10 @@ class Probe(object):
         return self.__str__()
     
 
-    def get_lat(self, lat_0=31):
+    def _get_lat(self, lat_0=31):
         return lat_0 + self.i
     
-    def get_lon(self, lon_0=106):
+    def _get_lon(self, lon_0=106):
         return lon_0 - self.j
     
 
