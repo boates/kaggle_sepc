@@ -102,6 +102,7 @@ def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod=distance.G
     else:
         return coord2_list[(distances<=maxd)]
 
+
 def classify(model, features):
     print "DUMMY 'classify'"
     return None

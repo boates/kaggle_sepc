@@ -4,20 +4,27 @@ class Probe(object):
     """
     Probe class
     """
-    def __init__(self, name, latitude, longitude, elevation):
-        self.name = name
-        self.lat  = latitude
-        self.lon  = longitude
-        self.elev = elevation
+    def __init__(self, i, j):
+        self.i   = i
+        self.j   = j
+        self.lat = self.get_lat()
+        self.lon = self.get_lon()
         self.features = None
-
+    
     def __str__(self):
-        s  = 'name: '+self.name+'\n'
+        s  = '(i, j): ('+self.i+','+self.j+')'+'\n'
         s += 'latitude: '+self.lat+'\n'
         s += 'longitude: '+self.lon+'\n'
-        s += 'elevation: '+self.elev+'\n'
         return s
     
     def __repr__(self):
         return self.__str__()
     
+    def get_lat(lat_0=31):
+        return lat_0 + self.i
+    
+    def get_lon(lon_0=106):
+        return lon_0 - self.j
+    
+
+        
