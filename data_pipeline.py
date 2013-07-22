@@ -2,6 +2,7 @@
 import random
 from objects.probe import Probe
 
+import numpy as np
 import pandas as pd
 from pandas import Series
 from pandas import DataFrame
@@ -49,7 +50,7 @@ def _get_datetime_from_station(date_string):
 
 def get_station_targets():
     df = read_csv("data/train.csv")
-    df['Date'] = df['Date'].map(_get_datetime_from_station) #datestring_index(df['Date']) #.map(_convert_station_date_to_datetime)
+    df['Date'] = df['Date'].map(_get_datetime_from_station)
     return df
 
 

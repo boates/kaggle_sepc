@@ -53,6 +53,10 @@ def load_stations(path='data/station_info.csv'):
     for idx, (name, lat, lon, elev) in df.iterrows():
         station = Station(name, lat, lon, elev)
         station.get_features()
+        print station.features.shape
+        print targets[name].shape
+        
+        station.features = station.features.merge(targets, on=('Date'))
 #        station.features[globals.TARGET] = targets[name]
         stations[name] = station
     return stations
@@ -64,16 +68,6 @@ def populate_stations():
 
 def get_station(station_name):
     return globals.STATIONS[station_name]
-
-
-# def populate_probes():
-#     """
-#     This is just all BS for now until
-#     we can actually load the real probes
-#     """
-#     for i in range(10):
-#         name = '%s' % i
-#         globals.PROBES[name] = get_example_probe(name)
 
 
 def populate_probes():

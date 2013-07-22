@@ -3,6 +3,7 @@
 main.py
 """
 import globals
+import numpy as np
 from utils import populate_stations
 from utils import populate_probes
 from utils import get_station
@@ -11,7 +12,8 @@ from utils import train_model
 #from utils import get_features_for_station
 from utils import classify
 from utils import get_probe
-
+from sklearn.ensemble import RandomForestRegressor
+import ml
 
 def main():
     
@@ -25,28 +27,23 @@ def main():
     # Eventually we'll pick the probe by station
     # Right now we're just hard coding the 0, 0 probe
     #all_features = get_all_features(globals.STATIONS.values(), globals.PROBES.values())
-    probe = get_probe(0, 0)
-    all_features = probe.features
+#    probe = get_probe(0, 0)
+#    all_features = probe.features
 
     # Let's train a model
-    model = train_model(all_features)
+#    model = train_model(all_features)
 
     # Let's get a particular station
     station = get_station("ACME")
+    print station.features.shape
+    print station.features['target'].values
 
-    # Let's get the features for this station
-    acme_features = station.features
+    model = RandomForestRegressor(n_estimators=10, max_depth=10)
+    mae = ml.run_model(model, station.features)
     
-    print acme_features.shape
-    print acme_features.head(1)
-    print acme_features.iloc[0]
-    
-    
+    print mae
 
-    # Now, let's try to classify
-    classification = classify(model, acme_features)
 
-    print classification
 
 
 if __name__ =="__main__":
