@@ -3,11 +3,7 @@ import pandas as pd
 import csv
 import globals
 from objects.station import Station
-from geopy.point import Point
-from geopy import distance
-import heapq
-import numpy as np
-import copy
+
 from data_pipeline import get_example_probe, get_probe_features
 from objects.station import Station
 from objects.probe import Probe
@@ -103,26 +99,16 @@ def get_all_features(stations, probes):
 
 
 def get_features_for_station(station):
-    print "DUMMY 'get_all_features'"
-    return globals.PROBES[(0, 0)].features
+    return station.get_nearest_probe(globals.PROBES.values()).features
 
 
 def train_model(features):
     print "DUMMY 'train_model'"
     return None
 
-
-def find_closest_coordinates(obj1, obj2_list, num_nearest=1, distance_method=distance.GreatCircleDistance):
-    distances = [find_distance(obj1, obj2, distance_method) for obj2 in obj2_list]
-    max_distance = np.max(heapq.nsmallest(num_nearest, distances))
-    ret = [obj2_list[idx] for idx, dist in enumerate(distances) if dist<=max_distance]
-    return ret
-    
-def find_distance(obj1, obj2, distance_method=distance.GreatCircleDistance):
-    distance.distance = distance_method
-    return distance.distance(Point(obj1.lat, obj1.lon), Point(obj2.lat, obj2.lon)).miles
-
-
 def classify(model, features):
     print "DUMMY 'classify'"
     return None
+
+
+
