@@ -8,7 +8,7 @@ from geopy import distance
 import heapq
 import numpy as np
 import copy
-from data_pipeline import get_example_probe
+from data_pipeline import get_example_probe, get_probe_features
 from objects.station import Station
 from objects.probe import Probe
 
@@ -59,14 +59,35 @@ def get_station(station_name):
     return globals.STATIONS[station_name]
 
 
+# def populate_probes():
+#     """
+#     This is just all BS for now until
+#     we can actually load the real probes
+#     """
+#     for i in range(10):
+#         name = '%s' % i
+#         globals.PROBES[name] = get_example_probe(name)
+
+
+
+
 def populate_probes():
     """
-    This is just all BS for now until
-    we can actually load the real probes
+    Returns the i, jth probe
     """
-    for i in range(10):
-        name = '%s' % i
-        globals.PROBES[name] = get_example_probe(name)
+
+    # Get the dataframe for all features
+    all_features = get_probe_features()
+    for lat in range(16):
+        for lon in range(9):
+            probe_features = all_features[(all_features['lat']==lat)&(all_features['lon']==lon)]
+            probe = Probe(lat, lon)
+            probe.features = probe_features
+            globals.PROBES[(lat, lon)] = probe
+
+
+def get_probe(i, j):
+    return globals.PROBES[(i, j)]
 
 
 def get_features_at_location(lat, lon, elivation):
@@ -83,7 +104,7 @@ def get_all_features(stations, probes):
 
 def get_features_for_station(station):
     print "DUMMY 'get_all_features'"
-    return globals.PROBES['0'].features
+    return globals.PROBES[(0, 0)].features
 
 
 def train_model(features):

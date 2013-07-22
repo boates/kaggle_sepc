@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import globals
+
 class Station(object):
     """
     Station class
