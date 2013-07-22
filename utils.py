@@ -46,7 +46,7 @@ def load_stations():
     station_data = csv.reader(station_file)
     stations = {}
     for name, lat, lon, elev in station_data:
-        station = Station(name, lat, long, elev)
+        station = Station(name, lat, lon, elev)
         stations[name] = station
     return stations
 
