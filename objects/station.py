@@ -20,7 +20,9 @@ class Station(object):
     def __repr__(self):
         return self.__str__()
 
-    def get_nearest_probe(self, probe_list = globals.PROBES):
+    def get_nearest_probe(self, probe_list):
+        if len(probe_list)==0:
+            return None
         nearest_probes =  find_closest_coordinates(self, probe_list, num_nearest)
         if len(nearest_probes)>0:
             return nearest_probes[0]
