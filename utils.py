@@ -91,16 +91,16 @@ def train_model(features):
     return None
 
 
-def find_closest_coordinates(coord1, coord2_list, n=1, distanceMethod=distance.GreatCircleDistance, getDistances=False):
-    distance.distance = distanceMethod  
-    distances = [distance.distance(Point(coord1['lat'], coord1['lon'],coord1['elev']), Point(coord2['lat'], coord2['lon'],coord2['elev'])).miles for idx, coord2 in coord2_list.iterrows()]
-    maxd = np.max(heapq.nsmallest(n, distances))
-    if getDistances:
+def find_closest_coordinates(df_coord1, df_coord2, num_nearest=1, distance_method=distance.GreatCircleDistance, get_distances=False):
+    distance.distance = distance_method
+    distances = [distance.distance(Point(df_coord1['lat'], df_coord1['lon']), Point(df_coord2['lat'], df_coord2['lon'])).miles for idx, coord2 in df_coord2.iterrows()]
+    max_distance = np.max(heapq.nsmallest(num_nearest, distances))
+    if get_distances:
         df_ret = copy.deepcopy(coord2_list)
         df_ret['dist'] = distances
-        return df_ret[df_ret['dist']<=maxd]
+        return df_ret[df_ret['dist'] <= max_distance]
     else:
-        return coord2_list[(distances<=maxd)]
+        return coord2_list[(distances <= max_distance)]
 
 
 def classify(model, features):
