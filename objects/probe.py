@@ -14,7 +14,7 @@ class Probe(object):
     def __str__(self):
         s  = '(i, j): (%s,%s) \n' % (self.i, self.j)
         s += 'latitude: %s\n' % self.lat
-        s += 'longitude: %s\n' % self.lon
+        s += 'longitude: %s' % self.lon
         return s
     
     def __repr__(self):
