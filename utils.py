@@ -2,9 +2,13 @@ import numpy as np
 import pandas as pd
 import csv
 import globals
+import pandas
 from objects.station import Station
 
-from data_pipeline import get_example_probe, get_probe_features
+from data_pipeline import get_example_probe
+from data_pipeline import get_probe_features
+from data_pipeline import get_station_targets
+
 from objects.station import Station
 from objects.probe import Probe
 
@@ -38,11 +42,15 @@ def datestring_index(date_int_list):
 
 
 def load_stations():
-    station_file  = open('data/station_info.csv', "rb")
-    station_data = csv.reader(station_file)
+    df = pandas.read_csv('data/station_info.csv')
     stations = {}
-    for name, lat, lon, elev in station_data:
+
+    # Load the targets for all stations
+    targets = get_station_targets()
+    for idx, (name, lat, lon, elev) in df.iterrows():
         station = Station(name, lat, lon, elev)
+        station.get_features()
+        station.features[globals.TARGET] = targets[name]
         stations[name] = station
     return stations
 
@@ -96,10 +104,6 @@ def get_all_features(stations, probes):
     print "DUMMY 'get_all_features'"
     print probes
     return [probe.features for probe in probes]
-
-
-def get_features_for_station(station):
-    return station.get_nearest_probe(globals.PROBES.values()).features
 
 
 def train_model(features):

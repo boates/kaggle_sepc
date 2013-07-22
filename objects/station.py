@@ -2,7 +2,6 @@
 
 import globals
 
-
 from geopy.point import Point
 from geopy import distance
 
@@ -22,16 +21,16 @@ def find_closest_coordinates(obj1, obj2_list, num_nearest=1, distance_method=dis
     return ret
 
 
-
 class Station(object):
     """
     Station class
     """
     def __init__(self, name, latitude, longitude, elevation):
         self.name  = name
-        self.lat   = latitude
-        self.lon   = longitude
-        self.elev  = elevation
+        self.lat   = float(latitude)
+        self.lon   = float(longitude)
+        self.elev  = float(elevation)
+        self.features = None
 
     def __str__(self):
         s  = 'name: %s\n' % self.name
@@ -39,7 +38,7 @@ class Station(object):
         s += 'longitude: %s\n' % self.lon
         s += 'elevation: %s\n' % self.elev
         return s
-    
+
     def __repr__(self):
         return self.__str__()
 
@@ -51,4 +50,6 @@ class Station(object):
             return nearest_probes[0]
         else:
             return None
-    
+
+    def get_features(self):
+        self.features = self.get_nearest_probe(globals.PROBES.values()).features
