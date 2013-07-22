@@ -8,9 +8,6 @@ import datetime
 from objects.station import Station
 from objects.probe import Probe
 
-N_LAT = 9
-N_LON = 16
-
 def get_station_targets(path='data/train.csv'):
     df = pd.read_csv(path)
     df['Date'] = df['Date'].map(lambda x: datetime.datetime.strptime(str(x),'%Y%m%d').date())
@@ -21,7 +18,6 @@ def load_stations(path='data/station_info.csv'):
     df = pd.read_csv(path)
     stations = {}
     
-    # Load the targets for all stations
     targets = get_station_targets()
     targets = targets[(targets['Date'] <= datetime.date(1994, 4, 10))]
     
@@ -73,13 +69,9 @@ def get_probe_features(path='data/features/', start_date='19940101'):
 
 
 def populate_probes():
-    """
-    Returns the i, jth probe
-    """
-    # Get the dataframe for all features
     all_features = get_probe_features()
-    for lat in range(N_LON):
-        for lon in range(N_LAT):
+    for lat in range(globals.N_LON):
+        for lon in range(globals.N_LAT):
             probe_features = all_features[(all_features['lat']==lat) & (all_features['lon']==lon)]
             probe = Probe(lat, lon)
             probe.features = probe_features
