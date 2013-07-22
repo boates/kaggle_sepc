@@ -2,17 +2,22 @@
 
 class Probe(object):
     """
+    Probe class
     """
     def __init__(self, name, latitude, longitude, elevation):
         self.name = name
         self.lat  = latitude
-        self.long = longitude
+        self.lon  = longitude
         self.elev = elevation
         self.features = None
 
-    def __repr__(self):
+    def __str__(self):
         s  = 'name: '+self.name+'\n'
-        s += 'latitude: %s \n' % self.lat
-        s += 'longitude: %s \n' % self.long
-        s += 'elevation: %s \n' % self.elev
+        s += 'latitude: '+self.lat+'\n'
+        s += 'longitude: '+self.lon+'\n'
+        s += 'elevation: '+self.elev+'\n'
         return s
+    
+    def __repr__(self):
+        return self.__str__()
+    

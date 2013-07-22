@@ -2,16 +2,21 @@
 
 class Station(object):
     """
+    Station class
     """
     def __init__(self, name, latitude, longitude, elevation):
         self.name  = name
         self.lat   = latitude
-        self.long  = longitude
+        self.lon   = longitude
         self.elev  = elevation
 
-    def __repr__(self):
+    def __str__(self):
         s  = 'name: '+str(self.name)+'\n'
         s += 'latitude: '+str(self.lat)+'\n'
-        s += 'longitude: '+str(self.long)+'\n'
+        s += 'longitude: '+str(self.lon)+'\n'
         s += 'elevation: '+str(self.elev)+'\n'
         return s
+    
+    def __repr__(self):
+        return self.__str__()
+    
