@@ -20,7 +20,10 @@ def main():
     print globals.PROBES
 
     # Let's make our feature set
-    all_features = get_all_features(globals.STATIONS.values(), globals.PROBES.values())
+    # Eventually we'll pick the probe by station
+    # Right now we're just hard coding the 0, 0 probe
+    #all_features = get_all_features(globals.STATIONS.values(), globals.PROBES.values())
+    all_features = get_feature_df(0, 0)
 
     # Let's train a model
     model = train_model(all_features)
