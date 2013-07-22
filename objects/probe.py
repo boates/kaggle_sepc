@@ -7,8 +7,8 @@ class Probe(object):
     def __init__(self, i, j):
         self.i   = i
         self.j   = j
-        self.lat = self.get_lat()
-        self.lon = self.get_lon()
+        self.lat = self._get_lat()
+        self.lon = self._get_lon()
         self.features = None
     
     def __str__(self):
@@ -20,10 +20,10 @@ class Probe(object):
     def __repr__(self):
         return self.__str__()
     
-    def get_lat(lat_0=31):
+    def _get_lat(lat_0=31):
         return lat_0 + self.i
     
-    def get_lon(lon_0=106):
+    def _get_lon(lon_0=106):
         return lon_0 - self.j
     
 
