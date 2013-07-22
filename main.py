@@ -10,6 +10,7 @@ from utils import get_all_features
 from utils import train_model
 from utils import get_features_for_station
 from utils import classify
+from utils import get_probe
 
 def main():
 
@@ -23,7 +24,8 @@ def main():
     # Eventually we'll pick the probe by station
     # Right now we're just hard coding the 0, 0 probe
     #all_features = get_all_features(globals.STATIONS.values(), globals.PROBES.values())
-    all_features = get_feature_df(0, 0)
+    probe = get_probe(0, 0)
+    all_features = probe.features
 
     # Let's train a model
     model = train_model(all_features)
