@@ -49,8 +49,8 @@ def split_data(df, train_frac=0.70, shuffle=True):
         
     train_len = int(N*train_frac)
         
-    df_train   = df.ix[indices[:train_len]]
-    df_predict = df.ix[indices[train_len:]]
+    df_train   = df.iloc[indices[:train_len]]
+    df_predict = df.iloc[indices[train_len:]]
     
     return df_train, df_predict
 
