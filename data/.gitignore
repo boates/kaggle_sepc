@@ -4,3 +4,4 @@
 *.csv
 *.nc
 *.pkl
+sepc_data/*
